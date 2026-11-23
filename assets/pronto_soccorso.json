@@ -1,0 +1,27 @@
+[
+  {
+    "nome": "Ospedale Maggiore Carlo Alberto Pizzardi",
+    "lat": 44.5075,
+    "lon": 11.3084
+  },
+  {
+    "nome": "Policlinico Sant'Orsola-Malpighi",
+    "lat": 44.4947,
+    "lon": 11.3559
+  },
+  {
+    "nome": "Ospedale di Bentivoglio",
+    "lat": 44.6338,
+    "lon": 11.4146
+  },
+  {
+    "nome": "Ospedale di San Giovanni in Persiceto",
+    "lat": 44.6464,
+    "lon": 11.1874
+  },
+  {
+    "nome": "Ospedale di Cento",
+    "lat": 44.7298,
+    "lon": 11.2883
+  }
+]
