@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:convert';
 import 'package:sos_ospedale/models/hospital.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String message = "Premi il pulsante";
+  Hospital? nearest;
 
   Future<void> trovaPosizione() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -43,8 +45,7 @@ class _HomePageState extends State<HomePage> {
       desiredAccuracy: LocationAccuracy.high,
     );
 
-    Hospital? nearest =
-    await trovaOspedalePiuVicino(position);
+    nearest = await trovaOspedalePiuVicino(position);
 
     setState(() {
       message =
@@ -83,6 +84,13 @@ class _HomePageState extends State<HomePage> {
                 onPressed: trovaPosizione,
                 child: const Text("TROVA ORA"),
               ),
+              const SizedBox(height: 20),
+              if(nearest != null)
+                ElevatedButton.icon(
+                  onPressed: avviaNavigazione,
+                  icon: const Icon(Icons.navigation),
+                  label: const Text('NAVIGA'),
+                ),
             ],
           ),
         ),
@@ -123,4 +131,18 @@ class _HomePageState extends State<HomePage> {
 
     return nearest;
   }
+
+  Future<void> avviaNavigazione() async {
+    if(nearest == null) return;
+
+    final Uri uri = Uri.parse(
+      'geo:${nearest!.lat},${nearest!.lon}?q=${nearest!.lat},${nearest!.lon}',
+    );
+
+    await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    );
+  }
+
 }
